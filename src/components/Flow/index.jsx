@@ -39,11 +39,19 @@ const Flow = () => {
     setReactFlowInstance(_reactFlowInstance);
 
   const onDragOver = (event) => {
+    if (!selectedFlow) {
+      return;
+    }
+
     event.preventDefault();
     event.dataTransfer.dropEffect = "move";
   };
 
   const onDrop = (event) => {
+    if (!selectedFlow) {
+      return;
+    }
+
     event.preventDefault();
 
     const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
@@ -76,6 +84,7 @@ const Flow = () => {
     const filteredOptions = options.filter((opt) => opt !== flow);
     setOptions(filteredOptions);
     removeFlowFromLocalStorage(flow);
+    setSelectedFlow(filteredOptions?.[0] || "");
   };
 
   const onSelectChange = (e) => {

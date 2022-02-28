@@ -3,7 +3,6 @@ import styled from "styled-components";
 const Select = ({ name, onChange, options, placeholder, value }) => (
   <SelectWrapper>
     <select onChange={onChange} name={name} id={name} value={value}>
-      <option value="">{placeholder}</option>
       {options?.map((option) => (
         <option key={option} value={option}>
           {option}

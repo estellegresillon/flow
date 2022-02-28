@@ -3,6 +3,7 @@ import styled from "styled-components";
 
 import IconPlus from "components/common/IconPlus";
 import Input from "components/common/Input";
+import ProjectsModal from "components/common/ProjectsModal";
 import Select from "components/common/Select";
 import SmallModal from "components/SmallModal";
 import {
@@ -23,6 +24,7 @@ const Sidebar = ({
   setSelectedFlow,
   setElements,
 }) => {
+  const [isOtherProjectsOpen, setOtherProjectsOpen] = useState(false);
   const [isCreateFlowOpen, setIsCreateFlowOpen] = useState(false);
   const onDragStart = (event, nodeType) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
@@ -37,13 +39,36 @@ const Sidebar = ({
     const newOptions = [...options, flowName];
     setOptions(newOptions);
     saveNewFlowInLocalStorage(flowName);
+    saveDocumentInLocalStorage(flowName, []);
     setSelectedFlow(flowName);
     setElements([]);
+  };
+
+  const handleCreateFlowOpen = (boolean) => {
+    setIsCreateFlowOpen(boolean);
+    if (boolean) {
+      setOtherProjectsOpen(false);
+    }
+  };
+
+  const handleOtherProjectsOpen = (boolean) => {
+    setOtherProjectsOpen(boolean);
+    if (boolean) {
+      setIsCreateFlowOpen(false);
+    }
   };
 
   return (
     <SideBarWrapper>
       <div className="flow-selector">
+        <Item>
+          <ItemContent onClick={() => handleOtherProjectsOpen(true)}>
+            Other projects
+          </ItemContent>
+          {isOtherProjectsOpen && (
+            <ProjectsModal onClose={() => handleOtherProjectsOpen(false)} />
+          )}
+        </Item>
         <Select
           name="flow-selector"
           onChange={onSelectChange}
@@ -97,7 +122,7 @@ const Sidebar = ({
         </div>
       </div>
       <div className="actions">
-        <div className="action new" onClick={() => setIsCreateFlowOpen(true)}>
+        <div className="action new" onClick={() => handleCreateFlowOpen(true)}>
           <IconPlus /> New
         </div>
         {isCreateFlowOpen && (
@@ -105,7 +130,7 @@ const Sidebar = ({
             hasButton
             name="flow"
             onValidate={onCreateFlow}
-            onClose={() => setIsCreateFlowOpen(false)}
+            onClose={() => handleCreateFlowOpen(false)}
           />
         )}
         <div className="action clean" onClick={onClean}>
@@ -169,8 +194,11 @@ const SideBarWrapper = styled.div`
   }
 
   .flow-selector {
+    width: 100%;
+
     select {
       margin-bottom: 20px;
+      width: 100%;
     }
   }
 
@@ -200,4 +228,17 @@ const SideBarWrapper = styled.div`
       border-color: #ff0072;
     }
   }
+`;
+
+const Item = styled.div`
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bolder;
+  margin-bottom: 20px;
+  position: relative;
+`;
+
+const ItemContent = styled.div`
+  white-space: nowrap;
 `;

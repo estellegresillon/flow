@@ -78,6 +78,7 @@ const SmallModalWrapper = styled.div`
 
 const CloseButton = styled.div`
   border-radius: 10px;
+  cursor: pointer;
   margin: 10px;
   text-align: center;
 `;
@@ -85,6 +86,7 @@ const CloseButton = styled.div`
 const CreateButton = styled.div`
   border-radius: 10px;
   color: white;
+  cursor: pointer;
   font-family: Gilroy;
   margin: 10px;
   padding: 10px 0;
