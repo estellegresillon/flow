@@ -12,8 +12,8 @@ const PROJECTS = [
     name: "Elden Delivery",
   },
   {
-    link: "https://motus.estellegresillon.fr",
-    name: "Wordle",
+    link: "https://playground.estellegresillon.fr",
+    name: "Playground",
   },
   {
     link: "https://chat.estellegresillon.fr",
